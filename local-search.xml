@@ -66,4 +66,248 @@
   
   
   
+  
+  
+  <entry>
+    <title>关于我</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[<p>陋室空堂，当年笏满床；衰草枯杨，曾为歌舞场；蛛丝儿结满雕梁，绿纱今又糊在蓬窗上。说甚么脂正浓、粉正香，如何两鬓又成霜？昨日黄土陇头埋白骨，今宵红绡帐底卧鸳鸯。金满箱，银满箱，转眼乞丐人皆谤；正叹他人命不长，那知自己归来丧？训有方，保不定日后作强梁。择膏梁，谁承望流落在烟花巷！因嫌纱帽小，致使锁枷扛；昨怜破袄寒，今嫌紫蟒长：乱哄哄你方唱罢我登场，反认他乡是故乡；甚荒唐，到头来都是为他人作嫁衣裳。</p>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[#!/usr/bin/env node'use strict';const {spawn} = require('child_process');const mozjpeg = require('.');const input = process.argv.slice(2);spawn(mozjpeg, input, {stdio: 'inherit'}).on('exit', process.exit);]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[{"name":"mozjpeg","version":"7.1.1","description":"mozjpeg wrapper that makes it seamlessly available as a local dependency","license":"MIT","repository":"imagemin/mozjpeg-bin","bin":"cli.js","engines":{"node":">=10"},"scripts":{"postinstall":"node lib/install.js","test":"xo && ava --timeout=120s","build-linux":"docker build --tag imagemin/mozjpeg docker && docker run --rm --volume $(pwd)/vendor/linux:/src/out imagemin/mozjpeg cp cjpeg /src/out"},"files":["index.js","cli.js","lib","vendor/source"],"keywords":["imagemin","jpeg","jpg","img","image","compress","minify","mozjpeg","optimize"],"dependencies":{"bin-build":"^3.0.0","bin-wrapper":"^4.0.0"},"devDependencies":{"ava":"^3.8.0","bin-check":"^4.1.0","compare-size":"^3.0.0","execa":"^4.0.0","tempy":"^0.5.0","xo":"^0.30.0"},"ava":{"serial":true}}]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';module.exports = require('./lib').path();]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[<h1 id="mozjpeg-bin"><a href="#mozjpeg-bin" class="headerlink" title="mozjpeg-bin "></a>mozjpeg-bin <img src="https://github.com/imagemin/mozjpeg-bin/workflows/test/badge.svg?branch=master" alt="GitHub Actions Status"></h1><blockquote><p><a href="https://github.com/mozilla/mozjpeg">mozjpeg</a> is a production-quality JPEG encoder that improves compression while maintaining compatibility with the vast majority of deployed decoders</p></blockquote><p>You probably want <a href="https://github.com/imagemin/imagemin-mozjpeg"><code>imagemin-mozjpeg</code></a> instead.</p><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$ npm <span class="hljs-keyword">install</span> mozjpeg<br></code></pre></td></tr></table></figure><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> &#123;execFile&#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>);<br><span class="hljs-keyword">const</span> mozjpeg = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;mozjpeg&#x27;</span>);<br><br><span class="hljs-title function_">execFile</span>(mozjpeg, [<span class="hljs-string">&#x27;-outfile&#x27;</span>, <span class="hljs-string">&#x27;output.jpg&#x27;</span>, <span class="hljs-string">&#x27;input.jpg&#x27;</span>], <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Image minified!&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure><h2 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h2><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">$ npm install <span class="hljs-comment">--global mozjpeg</span><br></code></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">mozjpeg --<span class="hljs-built_in">help</span></span><br></code></pre></td></tr></table></figure><h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>MIT © <a href="https://github.com/imagemin">Imagemin</a></p>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[#!/usr/bin/env node'use strict';const {spawn} = require('child_process');const optipng = require('.');const input = process.argv.slice(2);spawn(optipng, input, {stdio: 'inherit'}).on('exit', process.exit);]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[#!/usr/bin/env node'use strict';const {spawn} = require('child_process');const jpegtran = require('.');const input = process.argv.slice(2);spawn(jpegtran, input, {stdio: 'inherit'}).on('exit', process.exit);]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[<h1 id="optipng-bin"><a href="#optipng-bin" class="headerlink" title="optipng-bin "></a>optipng-bin <img src="https://github.com/imagemin/optipng-bin/workflows/test/badge.svg" alt="GitHub Actions Status"></h1><blockquote><p><a href="http://optipng.sourceforge.net/">OptiPNG</a> is a PNG optimizer that recompresses image files to a smaller size, without losing any information</p></blockquote><p>You probably want <a href="https://github.com/imagemin/imagemin-optipng"><code>imagemin-optipng</code></a> instead.</p><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">$ npm install <span class="hljs-comment">--save optipng-bin</span><br></code></pre></td></tr></table></figure><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> &#123;promisify&#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;util&#x27;</span>);<br><span class="hljs-keyword">const</span> &#123;execFile&#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>);<br><span class="hljs-keyword">const</span> optipng = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;optipng-bin&#x27;</span>);<br><br><span class="hljs-keyword">const</span> execFileP = <span class="hljs-title function_">promsify</span>(execFile);<br><br>(<span class="hljs-title function_">async</span> () =&gt; &#123;<br><span class="hljs-keyword">await</span> <span class="hljs-title function_">execFile</span>(optipng, [<span class="hljs-string">&#x27;-out&#x27;</span>, <span class="hljs-string">&#x27;output.png&#x27;</span>, <span class="hljs-string">&#x27;input.png&#x27;</span>]);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Image minified!&#x27;</span>);<br>&#125;)();<br></code></pre></td></tr></table></figure><h2 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">$ npm install --<span class="hljs-keyword">global</span> optipng-<span class="hljs-built_in">bin</span><br></code></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">optipng --<span class="hljs-built_in">help</span></span><br></code></pre></td></tr></table></figure>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[{"name":"optipng-bin","version":"7.0.1","description":"OptiPNG wrapper that makes it seamlessly available as a local dependency","license":"MIT","repository":"imagemin/optipng-bin","bin":{"optipng":"cli.js"},"engines":{"node":">=10"},"scripts":{"postinstall":"node lib/install.js","test":"xo && ava --timeout=120s"},"files":["index.js","cli.js","lib","vendor/source"],"keywords":["imagemin","compress","image","minify","optimize","png","optipng"],"dependencies":{"bin-build":"^3.0.0","bin-wrapper":"^4.0.0"},"devDependencies":{"ava":"^3.15.0","bin-check":"^4.0.1","compare-size":"^3.0.0","execa":"^5.0.0","tempy":"^1.0.0","xo":"^0.38.1"}}]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';module.exports = require('./lib').path();]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';module.exports = require('./lib/index.js').path();]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[{"name":"jpegtran-bin","version":"5.0.2","description":"jpegtran (part of libjpeg-turbo) bin-wrapper that makes it seamlessly available as a local dependency","license":"MIT","repository":"imagemin/jpegtran-bin","author":{"name":"Sindre Sorhus","email":"sindresorhus@gmail.com","url":"sindresorhus.com"},"maintainers":[{"name":"Kevin Mårtensson","email":"kevinmartensson@gmail.com","url":"github.com/kevva"},{"name":"Shinnosuke Watanabe","url":"github.com/shinnn"}],"bin":{"jpegtran":"cli.js"},"engines":{"node":">=10"},"scripts":{"postinstall":"node lib/install.js","test":"xo && ava --timeout=120s"},"files":["index.js","cli.js","lib","test","vendor/source"],"keywords":["imagemin","compress","image","img","jpeg","jpg","minify","optimize","jpegtran"],"dependencies":{"bin-build":"^3.0.0","bin-wrapper":"^4.0.0","logalot":"^2.0.0"},"devDependencies":{"ava":"^3.8.0","bin-check":"^4.0.1","compare-size":"^3.0.0","execa":"^4.0.0","tempy":"^0.5.0","xo":"^0.30.0"}}]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[<h1 id="jpegtran-bin"><a href="#jpegtran-bin" class="headerlink" title="jpegtran-bin "></a>jpegtran-bin <a href="https://travis-ci.org/imagemin/jpegtran-bin"><img src="https://travis-ci.org/imagemin/jpegtran-bin.svg?branch=master" alt="Build Status"></a></h1><blockquote><p><a href="http://libjpeg-turbo.virtualgl.org/">libjpeg-turbo</a> is a derivative of libjpeg that uses SIMD instructions (MMX, SSE2, NEON) to accelerate baseline JPEG compression and decompression on x86, x86-64, and ARM systems. On such systems, libjpeg-turbo is generally 2-4x as fast as the unmodified version of libjpeg, all else being equal.</p></blockquote><p>You probably want <a href="https://github.com/imagemin/imagemin-jpegtran"><code>imagemin-jpegtran</code></a> instead.</p><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">$ npm install <span class="hljs-comment">--save jpegtran-bin</span><br></code></pre></td></tr></table></figure><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> &#123;execFile&#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>);<br><span class="hljs-keyword">const</span> jpegtran = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;jpegtran-bin&#x27;</span>);<br><br><span class="hljs-title function_">execFile</span>(jpegtran, [<span class="hljs-string">&#x27;-outfile&#x27;</span>, <span class="hljs-string">&#x27;output.jpg&#x27;</span>, <span class="hljs-string">&#x27;input.jpg&#x27;</span>], <span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> &#123;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Image minified!&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure><h2 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">$ npm install --<span class="hljs-keyword">global</span> jpegtran-<span class="hljs-built_in">bin</span><br></code></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">jpegtran --<span class="hljs-built_in">help</span></span><br></code></pre></td></tr></table></figure><h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>MIT © <a href="https://github.com/imagemin">Imagemin</a></p>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';const path = require('path');const BinWrapper = require('bin-wrapper');const packageJson = require('../package.json');const url = `https://raw.githubusercontent.com/imagemin/optipng-bin/v${packageJson.version}/vendor/`;module.exports = new BinWrapper().src(`${url}macos/optipng`, 'darwin').src(`${url}linux/x86/optipng`, 'linux', 'x86').src(`${url}linux/x64/optipng`, 'linux', 'x64').src(`${url}freebsd/x86/optipng`, 'freebsd', 'x86').src(`${url}freebsd/x64/optipng`, 'freebsd', 'x64').src(`${url}sunos/x86/optipng`, 'sunos', 'x86').src(`${url}sunos/x64/optipng`, 'sunos', 'x64').src(`${url}win/optipng.exe`, 'win32').dest(path.resolve(__dirname, '../vendor')).use(process.platform === 'win32' ? 'optipng.exe' : 'optipng');]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';const os = require('os');const path = require('path');const binBuild = require('bin-build');const bin = require('.');const cpuNumber = Math.max(os.cpus().length, 1);bin.run(['-version']).then(() => {console.log('mozjpeg pre-build test passed successfully');}).catch(async error => {console.warn(error.message);console.warn('mozjpeg pre-build test failed');console.info('compiling from source');let cfgExtras = '';if (process.platform === 'darwin') {cfgExtras = 'libpng_LIBS=\'/usr/local/lib/libpng16.a -lz\' --enable-static';}const cfg = [`./configure --enable-static --disable-shared --disable-dependency-tracking --with-jpeg8 ${cfgExtras}`,`--prefix="${bin.dest()}" --bindir="${bin.dest()}" --libdir="${bin.dest()}"`].join(' ');try {await binBuild.file(path.resolve(__dirname, '../vendor/source/mozjpeg.tar.gz'), ['autoreconf -fiv',cfg,`make -j${cpuNumber}`,`make install -j${cpuNumber}`]);console.log('mozjpeg built successfully');} catch (error) {console.error(error.stack);// eslint-disable-next-line unicorn/no-process-exitprocess.exit(1);}});]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';const path = require('path');const binBuild = require('bin-build');const bin = require('./index.js');(async () => {try {await bin.run(['--version']);console.log('optipng pre-build test passed successfully');} catch (error) {console.warn(error.message);console.warn('optipng pre-build test failed');console.info('compiling from source');try {// From https://sourceforge.net/projects/optipng/files/OptiPNG/await binBuild.file(path.resolve(__dirname, '../vendor/source/optipng.tar.gz'), [`./configure --with-system-zlib --prefix="${bin.dest()}" --bindir="${bin.dest()}"`,'make install']);console.log('optipng built successfully');} catch (error) {console.error(error.stack);// eslint-disable-next-line unicorn/no-process-exitprocess.exit(1);}}})();]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';const path = require('path');const BinWrapper = require('bin-wrapper');const pkg = require('../package.json');const url = `https://raw.githubusercontent.com/imagemin/jpegtran-bin/v${pkg.version}/vendor/`;module.exports = new BinWrapper().src(`${url}macos/jpegtran`, 'darwin').src(`${url}linux/x86/jpegtran`, 'linux', 'x86').src(`${url}linux/x64/jpegtran`, 'linux', 'x64').src(`${url}freebsd/x86/jpegtran`, 'freebsd', 'x86').src(`${url}freebsd/x64/jpegtran`, 'freebsd', 'x64').src(`${url}sunos/x86/jpegtran`, 'sunos', 'x86').src(`${url}sunos/x64/jpegtran`, 'sunos', 'x64').src(`${url}win/x86/jpegtran.exe`, 'win32', 'x86').src(`${url}win/x64/jpegtran.exe`, 'win32', 'x64').src(`${url}win/x86/libjpeg-62.dll`, 'win32', 'x86').src(`${url}win/x64/libjpeg-62.dll`, 'win32', 'x64').dest(path.join(__dirname, '../vendor')).use(process.platform === 'win32' ? 'jpegtran.exe' : 'jpegtran');]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';const path = require('path');const binBuild = require('bin-build');const log = require('logalot');const bin = require('.');const args = ['-copy','none','-optimize','-outfile',path.join(__dirname, '../test/fixtures/test-optimized.jpg'),path.join(__dirname, '../test/fixtures/test.jpg')];bin.run(args).then(() => {log.success('jpegtran pre-build test passed successfully');}).catch(async error => {log.warn(error.message);log.warn('jpegtran pre-build test failed');log.info('compiling from source');const cfg = ['./configure --disable-shared',`--prefix="${bin.dest()}" --bindir="${bin.dest()}"`].join(' ');try {await binBuild.file(path.resolve(__dirname, '../vendor/source/libjpeg-turbo-1.5.1.tar.gz'), ['touch configure.ac aclocal.m4 configure Makefile.am Makefile.in',cfg,'make install']);log.success('jpegtran built successfully');} catch (error) {log.error(error.stack);// eslint-disable-next-line unicorn/no-process-exitprocess.exit(1);}});]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';const fs = require('fs');const path = require('path');const test = require('ava');const execa = require('execa');const tempy = require('tempy');const binCheck = require('bin-check');const binBuild = require('bin-build');const compareSize = require('compare-size');const jpegtran = require('..');test('rebuild the jpegtran binaries', async t => {const temporary = tempy.directory();const cfg = ['./configure --disable-shared',`--prefix="${temporary}" --bindir="${temporary}"`].join(' ');await binBuild.file(path.resolve(__dirname, '../vendor/source/libjpeg-turbo-1.5.1.tar.gz'), [cfg,'make install']);t.true(fs.existsSync(path.join(temporary, 'jpegtran')));});test('return path to binary and verify that it is working', async t => {t.true(await binCheck(jpegtran, ['-version']));});test('minify a JPG', async t => {const temporary = tempy.directory();const src = path.join(__dirname, 'fixtures/test.jpg');const dest = path.join(temporary, 'test.jpg');const args = ['-outfile',dest,src];await execa(jpegtran, args);const result = await compareSize(src, dest);t.true(result[dest] < result[src]);});]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA['use strict';const path = require('path');const BinWrapper = require('bin-wrapper');const pkg = require('../package.json');const url = `https://raw.githubusercontent.com/imagemin/mozjpeg-bin/v${pkg.version}/vendor/`;module.exports = new BinWrapper().src(`${url}macos/cjpeg`, 'darwin').src(`${url}linux/cjpeg`, 'linux').src(`${url}win/cjpeg.exe`, 'win32').dest(path.join(__dirname, '../vendor')).use(process.platform === 'win32' ? 'cjpeg.exe' : 'cjpeg');]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>music</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" href="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"> <script src="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script> <script src="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script>     <div id="aplayer-iMJWHYCb" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="7868005687" data-server="tencent" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="1000px" data-preload="auto" data-theme="#555"    ></div>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>archives</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+  </entry>
+  
+  
+  
 </search>

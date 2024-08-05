@@ -289,11 +289,11 @@
   
   
   <entry>
-    <title>music</title>
+    <title>音乐</title>
     <link href="/"/>
     <url>/</url>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" href="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"> <script src="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script> <script src="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script>     <div id="aplayer-iMJWHYCb" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="7868005687" data-server="tencent" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="1000px" data-preload="auto" data-theme="#555"    ></div>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" href="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"> <script src="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script> <script src="http://aciano.top/redirect/?target=https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script>     <div id="aplayer-sdScZyBV" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="7868005687" data-server="tencent" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="1000px" data-preload="auto" data-theme="#555"    ></div><div class="markdown-body">迷茫的时候，选择最难走的那条道路</div>]]></content>
     
   </entry>
   

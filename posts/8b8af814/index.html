@@ -16,31 +16,29 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="呆头鹅">
+  <meta name="author" content="佘书晨">
   <meta name="keywords" content="">
   
-    <meta name="description" content="关于提交文章的简要介绍(加密).">
+    <meta name="description" content="基数统计(Cardinality Counting)指计算一个数据集中不同元素的数量，在很多场景都需要这样的功能：电商场景中的独立用户(UV)数量统计、数据库中快速计算字段取值数量以优化query、计算与某个站点相关的不同链接数量等。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="介绍一下如何提交文章">
-<meta property="og:url" content="https://sheshuchen.github.io/posts/5e72dd04/index.html">
+<meta property="og:title" content="网络流量测量之基数估计：从LC到HLL">
+<meta property="og:url" content="https://sheshuchen.github.io/posts/8b8af814/index.html">
 <meta property="og:site_name" content="佘书晨">
-<meta property="og:description" content="关于提交文章的简要介绍(加密).">
+<meta property="og:description" content="基数统计(Cardinality Counting)指计算一个数据集中不同元素的数量，在很多场景都需要这样的功能：电商场景中的独立用户(UV)数量统计、数据库中快速计算字段取值数量以优化query、计算与某个站点相关的不同链接数量等。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sheshuchen.github.io/img/1.png">
-<meta property="article:published_time" content="2024-08-04T17:03:36.000Z">
-<meta property="article:modified_time" content="2024-08-05T04:58:30.320Z">
+<meta property="og:image" content="https://sheshuchen.github.io/estimation.png">
+<meta property="article:published_time" content="2024-08-07T02:38:47.000Z">
+<meta property="article:modified_time" content="2024-08-07T03:04:24.862Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="博客">
-<meta property="article:tag" content="Fluid">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="基数估计">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sheshuchen.github.io/img/1.png">
+<meta name="twitter:image" content="https://sheshuchen.github.io/estimation.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>介绍一下如何提交文章 - 佘书晨</title>
+  <title>网络流量测量之基数估计：从LC到HLL - 佘书晨</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -237,13 +235,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/404.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">介绍一下如何提交文章</span>
+            <span id="subtitle">网络流量测量之基数估计：从LC到HLL</span>
           
         </div>
 
@@ -253,14 +251,14 @@
     
       <span class="post-meta mr-2">
         <i class="iconfont icon-author" aria-hidden="true"></i>
-        呆头鹅
+        佘书晨
       </span>
     
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-08-05 01:03" pubdate>
-          2024年8月5日 凌晨
+        <time datetime="2024-08-07 10:38" pubdate>
+          2024年8月7日 上午
         </time>
       </span>
     
@@ -271,7 +269,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          83 字
+          1.9k 字
         
       </span>
     
@@ -282,7 +280,7 @@
         
         
         
-          1 分钟
+          16 分钟
         
       </span>
     
@@ -328,25 +326,60 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">介绍一下如何提交文章</h1>
+            <h1 id="seo-header">网络流量测量之基数估计：从LC到HLL</h1>
             
             
-              
-              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="bc68732b520b55d4ebfadb1ad3491d3acda8f0ca71df3e0aeb26d0671a05e41e">10d79030e8222445804370796b90fca1cf7dd2ee01010d95413afa643c36d75c6da7dc8584583c53132d123565a83bc482d57efe09dbb13f6be1ebadf67b396c5e9af14ae37a94b87d779719bc8c1cd1a95420a6d53586101970b6bd1e11383c5fb9eb6a2afd2dfd764940c736e232c31819ba63da4a7c6eb6c1003cc6443dcf2082b9f749ca03a1484b87b08c908b3c310d7b631064a7fc3f9ca36177e4c3059978875c3caa78a7dceb6037a9522caf5c4adf858dd97440561f76a5ba5e4fd77e9898dfeb4cad54c4bb643f9c0ecbaef49a3431bdd2455830a88255232397afbbe9b23eb9395dfae6f0824e03416bc0b3804386abdc6c923976a913424fdbf1ba89bde972822239ac5e9109f398b65ae65ef00629508a203d30649f6408e1f61f5f6e73d99349907d745bd4c4ef0763621826913a2677273e3b66ae19439d1940d9ebcc45d324738506f0ac5dca5093adf45b82a24da2d49432e9f7cea3b56d73ea8b80628014008c75e6df0aa070ccdaa53907f1adc5e6234b2ab2f7f8485fb9383dc64927d631e20713c7d719815e20c9d6247aa120998e681a19e43d40ca49e20ce7419d535072ff85e74c96caabe848f11f049126a6f4cbbfc746a3cae3d4b6c98db711e8b3bdbd372def67e3d1bf776ee35037a2377d5898704789976ec22fc47c64eb83da5766f0408afee5b438701c6084a1025c673100e7ac0cf710407782790b56679a3fbb40313022e90f715c1a39914fe4b710beb621310bee163ece727a9d02da8b2ef0925acbeedbed1bdf2fb2a5a106956f607dcb5fcef0e36a97afa6fe5d415be51d647cc196fec6186575845eba2577edf79b237f40501d9e0516fe26fcc18e5bb029218ceea51ed6571ed6499c1b863fe5e4184373aee7af54e687aecc3ffa4986afe90e3a5fd67d73f47c0c882443054fed1625259e96370f07d55431f1a03130d5486c9ac1bc2c51d48a7b31ca8c81fdd6cc8795e3296ee5cc4dd66f3e582583d5516a299f41c5bc32710ee392ddb18d02b9fea50df38fbea6579d1f8a7a1ec2fdcff1a546b814a5a1a9b6de235f8bec004545adfaf2f0e461b5f427cac3fc691aa9edb943d5850ffd603a61acdde57fdd6695365d7545ae09b0febf35c90b0ad927af244e7e4c6de2b4167813388fa8aaae8a56c4f9d198c0c101ac9464e7a3717f9413cbbacb93d46cac92c7a19af455364d43a0b45c993fd8a5998589b3836122bb1562811d7c3d1f486b9f0adb0753fbedfe974213dc090ce2b6f3c875ddd6d39a34739526a81e1bd353b61527691c945921dcac2cba60a8f92c105e4e543df39ccf78e1f6c06ffe2cdd6c5f5a0d73eee1c4e9736397bca99f36eee5541ed37c2f906196441fcc4fba02e1c13aa45e04afd16a88d56128201c8fcdbc46131578f5908a5a4a57c04a200edbb384864828df0f88d08bb0564524c5a5bc5f7d10cb0ed456f8ea760f8d4703f35dd8c6f0fdee3466f1a9ebe49ff9f20c01c924751e66be903e0cd26c2a80c93fcc7f36482dac9da1e0037364a798de5f78e95f1e72195555c46fda84f806f2af6a36a997a2825e917f4da687289e1a7a9f406cbdd73d48c097223725dd37b2217ef6c2b1278b453e7214179ff65267c3bc128cb0c8e9dec73ee30220e305f7decbd46d27a1ebc4c102a1900bfbc5ece518abb9a41679c062b2f8a295f92c8cc1c93d8ab311d1c883047003eebd98c8a2c2f0493a4fb93781c2399b11d4ce8cbb6baf615680e3730c5564a5ce96bbcaa72bab20fcfe8dc2b3fa2e077cccab3a61547f7a562859a2a79a3dd5837ec78d3a6b82dd98b96803a682b8967b3bb7324055a0f91167e37c47e2bb9f5eb1b9b2f2ebddc0b9aa517cfd53af5a2ec8f0bc8c16f462ca645cb97c5ac6976fbc083607848b5b317ebd2829d80f8a20d5f629c8cce328bbf65a6808e8f6f9824047be241c48f8ebda67c955b3bbeb869295135d6f3ad1548b0d6cc9ad1a4587bfdc58a6aef4fc7a29bab25fcdc3794c97693f137534b89368820c3f94d4022c9652747601ec2885e592f2dae2f3417e7bfeccf7b3b227af35b94fc767cfc162379f4ff8718cc2a402f9a5546b39b25d4af932bc5534f8c99fe43836e1f7bcb8e865eaa9391fc963895f536d072e8239f71fbbf394b3a2c25bea4f67ccabad99c8e94777dedc77961f77a1c0037f357666c33ad8f148f7b20565701ea0a243ee742bb11a530b7ad67cc9ede5e1c32e6b403d735d4e2e604cc1cf960e63c0c344baeb5d636eb4ba169576d907aa15e8d17a3f9b7221ad77a4ee97b58ca41cf3960172ff14981ed15252adf26b3573b2b2f1cd27c6306ad3934031d18d74302d9b39ea7bbfbadbd40cffe9a1f970ae77079754a85cfc490263907294afaa0a803b173c1d55c7509de3f66f038badfcbfd0389d7c625f0586c9042ac29cb87bfceffae8d7cb92714d13d7a688b8379c53a34512cdc31f2131409977e6e465a0cb1c6baa9461eda5ef8798efc0cc1dcdd15a9d7ec0a6dae2e719e8b245da97ebd32803a8854d10b04c64336aaf079db6b4e1446457ed8090da82ed305584d66b5d2cddcda0140a369e3eddb8e048135f7bc8e9624817edd72357d12a6bfcbaf902d18bd87d6d668b97eb38a2c2ec9ce1557e3135bb7a30eacdc6fb58ac4c974a5d44ff57cea04ca67b5631a6be2d1e68a656d0f2b357906744ca4640472973dec08ffd3368362df828a9b04aadd742ba14f9cd0bbe5ee78007bd59eed3b11ab14c525ca5a666cb5db7a3160ce72c9384fe03a6aff36304356a1107bff7206c1403e170af861fa0f4a398b4e7b8452d3630174624ddda010566b03871b843bf03872ab90931a14717c4cafa9f5eee7feb3bbfb53070a5a37fb141aa329bc0161f1868fd7fe6922ee078d0f4dc2c550ef8c695dc9446416cd731c1617affe08e5dcff2635d6f8c7cdfcc7b436a5f57cd620fccf2c142415788555978bdb2f88b5abd54c01c27b730f32bc7fe4d4bfb6b8603fa7431a50885d86c796a8d2bc897c8e37d7469cd9b4b96953c824251916796bcb69ecf4f899a6b9711595e8cbab5e53392c7eab7a2e49132d9c2f6ea31867434cdd80f098e3ff5e5504f36ce9be2b4fdf3ffc0d21f24618cbf6af2195a36b66b5002d0e131b09f32de9617f60803309a683148065274a3fc15abb5d7d2448d5f1ac0a84e25334d942301641b87bffcbbd5c37a95b6245c736b52f5787837092d0b8eef5e561db65b86e0e81b1c55a3ac0769563299f81705f756dd3406e2a73b6815c6c964cb5ae3d4c9121144bc476c7d2ac6c2bb57d25e766c560613f655345004d8a72c9d3d4ff14e1a148b5cbb11dfd80fdbc19f4965472910687fbd05c700c1c7a5358d27968d5f4842b5b3d7fc43e133de1e4a851d33d54104244f4297a3b76cf2c83935ee63892803b77c4d5cfa9046c92c2668445adcae178b0f9add6cb9288a1a7f9077d50f255612d2641af879884b885f1e22915c16df0646718f6ee25ae610b25b14284cc422f8cf61e35c750f7f119b56b118551e3e30c595375bbc0862ee5c2014d40840af4b1439bbffddbc7c197c3e670815344634f937aa267476dc694a01752b5705a577faa66c4f2bfb3591d4bd381be0e2d6146afcc8d8ee5ebe9d8ee251bfb7c170cf6b2cb4ca3c69b5dcbcbcd733d34e06dfca431298d59873ffde3573171af33e0e4dd97389ce2462fada5033c57cca7cb5f681cb2e6e7e09f1f54eb1f9460631d34520bbbd3cc28bd7f12e7812cf81459231cbab684f5a801acab7bd4ac4516089877dc92bdbd7ac176eb4ab27a5e7692ce0696b415c2c345461f693d8b1e984c9289e7d710df1c73c979dad171c7e48d2712372568968f460e478a0c0c551b2bbb36fb1abed6f71003fdf85a668f6cf3ad76a2dc0acd20756441c779ca12f39020be7e974fc254448f60e5b2f99bdf13b8986f685fcfbde9387386a4ae8be3473751f0f735ce3f7c355f506be57dbbfba85a919ab04891cebcf01068ac1332ec98804253140b99297b4af7589da71cd4cd9de0ff8eb651509079c8e86845821c3502a76af1bea59efb6ab690383fc1870f9851a5883858c4e2cfa06de3abaa8c93f978672f54db7b01f9fcc8b5b4b07be5f6b65d8726f2d9d1bf8e1acd215d22e1f4e4a1b03bffd4db5be73788b91e78a8658aa9577a19dc109c28a1366600c3f2c757e6efd441f3009f96bc67f12d221392b597819d95d871c242a8f6b98c86d04dadcbc5be340d53312c87a7f2672322067ba0a615f4fb1b55b22d7b1417b941c</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">猜猜密码是啥?</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
-              
+              <div class="markdown-body">
+                
+                <h3 id="应用背景"><a href="#应用背景" class="headerlink" title="应用背景"></a>应用背景</h3><p>如检测一个网站的<code>独立访客(UV)</code>的数量，需要统计网站访问者IP地址，并统计不同IP地址的数量。从一个集合中统计出不同元素的数量，这个过程被称为<code>基数统计(Cardinality Counting)</code>。。</p>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>为实现这样的功能，最直观的方法就是使用 <font color = purple>Set </font> 记录每一个元素。但在数量巨大的情况下，会造成大量的内存占用。</p>
+<p>使用<code>位图 (bitmap)</code> 可以将一个很长的序列压缩成一个紧凑的位图，从而减少内存占用。注意这时的内存占用与存储的元素数量无关，而是与元素值的范围有关。也就是说即使只有一个数值，也必会占用一个位图。</p>
+<p>以上两种方式都对基数进行<strong>精确统计</strong>，但是很多时候只需要一个大概的数量，只要误差在一定范围内即可。接下来要讨论的几种算法可以在牺牲一定精确性的情况下，大幅度降低空间占用。即<strong>基数估计(cardinality estimation)</strong></p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="Linear-counting-LC"><a href="#Linear-counting-LC" class="headerlink" title="Linear counting (LC)"></a>Linear counting (LC)</h4><p>Linear counting 是一种基数估计算法，它使用一个固定大小的数组，来统计不同元素的数量。</p>
+<p>记事件 ( A_j ) 为“经过 ( n ) 个数字哈希后，桶 ( j ) 仍为空”，则<br>[ P(A_j) &#x3D; \left(1-\frac{1}{m}\right)^n ]</p>
+<p>记 ( U_n ) 为经过 ( n ) 个数字哈希后，仍为空的桶数量。因各桶独立，则<br>[ E(U_n) &#x3D; m\left(1-\frac{1}{m}\right)^n &#x3D; m\left[\left(1+\frac{1}{-m}\right)^{-m}\right]^{-\frac{n}{m}} ]</p>
+<p>当 ( m \to \infty ) 时，<br>[ \lim_{m \to \infty} E(U_n) &#x3D; \lim_{m \to \infty} m\left[\left(1+\frac{1}{-m}\right)^{-m}\right]^{-\frac{n}{m}} &#x3D; me^{-\frac{n}{m}} ]</p>
+<p>由此得<br>[ n &#x3D; -m \log{\frac{E(U_n)}{m}} ]</p>
+<p>由于每个桶服从相同参数的0-1分布，( U_n ) 符合二项分布。当 ( n ) 很大时，可用正态分布近似，其概率密度函数为<br>[ f(x) &#x3D; \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2{\sigma}^2}} ]</p>
+<p>实际观察到的空桶数 ( u ) 可作为 ( E(U_n) ) 的无偏估计，故 ( \hat{n} &#x3D; m*(-\ln{\frac{u}{m}}) ) 为 ( n ) 的无偏估计。</p>
+<h5 id="误差估计"><a href="#误差估计" class="headerlink" title="误差估计"></a>误差估计</h5><p><strong>偏差</strong><br>记装载因子 ( t &#x3D; \frac{n}{m} )，空桶比例 ( V_n &#x3D; \frac{U_n}{m} )，空桶数量期望 ( p &#x3D; E(V_n) &#x3D; \frac{E(U_n)}{m} &#x3D; e^{-\frac{n}{m}} &#x3D; e^{-t} )</p>
+<p>记 ( -\ln{(V_n)} &#x3D; f(V_n) )，则 ( \hat{n} &#x3D; mf(V_n) )</p>
+<p>在 ( V_n ) 处泰勒展开:<br>[ \hat{n} &#x3D; m\left(f(p)+(V_n-p)f’(p)+\frac{1}{2}(V_n-p)^2f’’(p)+\frac{1}{6}(V_n-p)^3f’’’(p)…\right) ]<br>[ &#x3D; m\left(t-\frac{V_n-p}{p}+\frac{(V_n-p)^2}{2p^2}-\frac{(V_n-p)^3}{3p^3}+\frac{(V_n-p)^4}{4p^4}…\right) ]</p>
+<p>取前三项:<br>[ E(\hat{n}) &#x3D; mt-\frac{mE(V_n-p)}{p} + \frac{E(V_n-p)^2}{2p^2} ]</p>
+<p>因 ( p &#x3D; E(V_n) )，故<br>[ E(\hat{n}) &#x3D; mt+\frac{m}{2p^2}E(V_n-p)^2 ]</p>
+<p>其中<br>[ E(V_n-p)^2 &#x3D; Var(V_n) &#x3D; \left(\frac{1}{m}\right)e^{-t}(1-(1+t)e^{-t}) ]</p>
+<p>最终<br>[ E(\hat{n}) &#x3D; n+\frac{e^t-t-1}{2} ]<br>[ Bias\left(\frac{\hat{n}}{n}\right) &#x3D; E\left(\frac{\hat{n}}{n}\right)-1 &#x3D; \frac{e^t-t-1}{2n} ]</p>
+<p><strong>标准差</strong><br>取泰勒展开的前两项， ( \hat{n} &#x3D; m\left(t-\frac{V_n-p}{p}\right) )</p>
+<p>[ Var\left(\frac{\hat{n}}{n}\right) &#x3D; \frac{1}{n^2}\left(\frac{m^2}{p^2} Var(V_n-p)\right) &#x3D;\frac{1}{n^2}\left(\frac{m^2}{p^2} Var(V_n)\right) &#x3D;\frac{1}{n^2}\left(\frac{m^2}{p^2} \frac{1}{m}\right)p(1-(1+t)p) &#x3D; \frac{m(e^t-t-1)}{n^2} ]</p>
+<p>得<br>[ StdError\left(\frac{\hat{n}}{n}\right) &#x3D; \frac{\sqrt{m(e^t-t-1)}}{n} ]</p>
+<p>其中 ( t &#x3D; \frac{n}{m} ) 。对 ( m ) 求导得到 ( \frac{1}{m}(e^{\frac{n}{m}}(m-n)-1) )，因 ( m &lt; n )，这是关于 ( m ) 的递减函数，故分桶数量越大，标准差越小。</p>
+<h3 id="控制误差"><a href="#控制误差" class="headerlink" title="控制误差"></a>控制误差</h3><p>若需将误差控制在 $\epsilon$ 以下，则有<br>[ \frac{\sqrt{m(e^t-t-1)}}{n} &#x3D; \frac{\sqrt{\frac{e^t-t-1}{t}}}{t} &lt; \epsilon ]</p>
+<p>由此得到 $m$ 的最小数量为<br>[ m &gt; \frac{e^t-t-1}{(\epsilon t)^2} ]</p>
+<h3 id="满桶控制"><a href="#满桶控制" class="headerlink" title="满桶控制"></a>满桶控制</h3><p>当每个桶的值均设为 1，即 $u &#x3D; 0$ 时，$\hat{n} &#x3D; -m \log{\frac{u}{m}}$ 将趋向于无穷大。然而，只要 $m &lt; n$，总存在一定的概率使得 $u &#x3D; 0$。目标是确保这一概率足够小。</p>
+<p>当 $n \to +\infty$，$U_n$ 的二项分布可以近似为正态分布。通过确保 $U_n$ 的期望值与 0 的偏移超过若干倍的标准差来实现控制：<br>[ E(U_n) - a \times StdDev(U_n) &gt; 0 ]</p>
+<p>代入 $E(U_n) &#x3D; me^{-t}$ 和 $StdDev(U_n) &#x3D; \sqrt{me^{-t}(1-(1+t)e^{-t})}$，得到<br>[ m &gt; a^2(e^t-t-1) ]</p>
+<h3 id="结合限制条件"><a href="#结合限制条件" class="headerlink" title="结合限制条件"></a>结合限制条件</h3><p>结合误差控制和满桶控制，最终 $m$ 在期望误差内的最小长度为:<br>[ m &gt; \beta (e^t-t-1), \quad \beta&#x3D;max(a^2, \frac{1}{(\epsilon t)^2}) ]</p>
+<h3 id="确定-a"><a href="#确定-a" class="headerlink" title="确定 $a$"></a>确定 $a$</h3><p>当 $n$ 非常大且落入单个桶的概率 $p &#x3D; \frac{1}{m}$ 极小时，$U_n$ 可以用泊松分布近似。因此，满桶的概率为<br>[ Pr(U_n&#x3D;0) &#x3D; e^{-\lambda} ]</p>
+<p>若要满桶的概率小于 1%，只需 $e^{-\lambda} &lt; 0.01$，从而得到 $\lambda &gt; 5$。因此，只要 $U_n$ 的期望与 0 偏离为 $\sqrt{5}$ 即可确保满桶的概率小于 1%。</p>
+<h3 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h3><p>在 $a &#x3D; \sqrt{5}$ 的情况下，对于不同规模的 $n$，$m$ 的最小长度大约为 $n$ 的十分之一。因此，所需空间仅为传统 bitmap 方法的 $\frac{1}{10}$，但整体空间复杂度仍为 $O(N_{max})$。</p>
+<p>例如，当 $n &#x3D; 2^{30}$ 时，计算得出 $\epsilon &#x3D; 0.01$ 时 $m &#x3D; 75402422$，因此空间占用为 $9$ MB，约为 bitmap 方案的 $\frac{1}{14}$。</p>
+<h3 id="并集与交集"><a href="#并集与交集" class="headerlink" title="并集与交集"></a>并集与交集</h3><p>Linear Counting 支持对多个记录进行合并计算。计算并集时，可以通过简单的 OR 运算得到新的 bitmap，进而计算出估计结果。计算交集时，可通过两集合和并集间接算出。</p>
+<h3 id="LogLog-Counting"><a href="#LogLog-Counting" class="headerlink" title="LogLog Counting"></a>LogLog Counting</h3><h4 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h4><p>LogLog Counting 使用哈希函数 $H$ 应用于所有元素，并对哈希值进行基数估计。$H$ 必须具备良好的均匀性和极低的碰撞概率。</p>
+<h4 id="粗糙估计"><a href="#粗糙估计" class="headerlink" title="粗糙估计"></a>粗糙估计</h4><p>设 $a$ 是经过 $H$ 哈希后的值，长度固定为 $L$。记 $\rho(a)$ 为 $a$ 中第一个 “1” 出现的位置，$\rho_{max}$ 为所有元素哈希后 $\rho(a)$ 的最大值。则总量的估计为<br>[ \hat{n} &#x3D; 2^{\rho_{max}} ]</p>
+<h4 id="分桶平均"><a href="#分桶平均" class="headerlink" title="分桶平均"></a>分桶平均</h4><p>LogLog Counting 使用分桶平均的方式减少误差。根据前 $k$ 位将哈希空间平分为 $m &#x3D; 2^k$ 份，每个桶维护一个 $\rho_{max}$，形成数组 $M$。最终估计时取所有桶的平均值再进行估计。</p>
+<p>[ \hat{n} &#x3D; 2^{\frac{\Sigma{M[i]}}{m}} ]</p>
+<h4 id="误差修正"><a href="#误差修正" class="headerlink" title="误差修正"></a>误差修正</h4><p>通过数学分析，得到渐近无偏估计量<br>[ \hat{n} &#x3D; \alpha_m2^{\frac{1}{m}\Sigma{M[i]}} ]<br>其中<br>[ \alpha_m &#x3D; (\Gamma (-\frac{1}{m})\frac{1-2^{\frac{1}{m}}}{\log 2})^{-m} ]</p>
+<h4 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h4><p>当 $m &gt; 64$ 时，标准误差为<br>[ StdError(\frac{\hat{n}}{n}) \approx \frac{1.3}{\sqrt{m}} ]</p>
+<p>若要将误差控制在 $\epsilon$ 内，则<br>[ m &gt; (\frac{1.30}{\epsilon})^2 ]</p>
+<h3 id="Adaptive-Counting"><a href="#Adaptive-Counting" class="headerlink" title="Adaptive Counting"></a>Adaptive Counting</h3><h4 id="主要改进"><a href="#主要改进" class="headerlink" title="主要改进"></a>主要改进</h4><p>Adaptive Counting 通过寻找一个分段点使 Linear Counting 和 LogLog Counting 的优点互补。分段点处 Linear Counting 的空桶率 $\beta &#x3D; e^{-t} \approx 0.051$。</p>
+<h3 id="HyperLogLog-Counting"><a href="#HyperLogLog-Counting" class="headerlink" title="HyperLogLog Counting"></a>HyperLogLog Counting</h3><h4 id="主要改进-1"><a href="#主要改进-1" class="headerlink" title="主要改进"></a>主要改进</h4><ul>
+<li><strong>调和平均数</strong>：使用调和平均数替代几何平均数以减少离群值的影响。</li>
+<li><strong>分段偏差修正</strong>：给出了在 $n$ 较小或较大时的偏差修正方案。</li>
+</ul>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>HyperLogLog Counting 通过改进将误差从 $1.3&#x2F;\sqrt{m}$ 优化到了 $1.04&#x2F;\sqrt{m}$，同时保持了与 LogLog Counting 相同的空间复杂度。</p>
 
-              
+                
+              </div>
             
             <hr/>
             <div>
@@ -362,17 +395,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%93%8D%E4%BD%9C/" class="category-chain-item">博客操作</a>
-  
-  
-
-      </span>
-    
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Hexo/" class="category-chain-item">Hexo</a>
+  <a href="/categories/%E5%9F%BA%E6%95%B0%E4%BC%B0%E8%AE%A1/" class="category-chain-item">基数估计</a>
   
   
 
@@ -387,11 +410,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8D%9A%E5%AE%A2/" class="print-no-link">#博客</a>
-      
-        <a href="/tags/Fluid/" class="print-no-link">#Fluid</a>
-      
-        <a href="/tags/hexo/" class="print-no-link">#hexo</a>
+        <a href="/tags/%E5%9F%BA%E6%95%B0%E4%BC%B0%E8%AE%A1/" class="print-no-link">#基数估计</a>
       
     </div>
   
@@ -403,8 +422,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>介绍一下如何提交文章</div>
-      <div>https://sheshuchen.github.io/posts/5e72dd04/</div>
+      <div>网络流量测量之基数估计：从LC到HLL</div>
+      <div>https://sheshuchen.github.io/posts/8b8af814/</div>
     </div>
     <div class="license-meta">
       
@@ -444,18 +463,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/8b8af814/" title="网络流量测量之基数估计：从LC到HLL">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">网络流量测量之基数估计：从LC到HLL</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/f20f8f03/" title="七夕节专属网页">
-                        <span class="hidden-mobile">七夕节专属网页</span>
+                      <a href="/posts/5e72dd04/" title="介绍一下如何提交文章">
+                        <span class="hidden-mobile">介绍一下如何提交文章</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -652,23 +665,6 @@
   
 
 
-
-
-  
-  <script defer>
-    if (document.getElementById('hbePass') || document.querySelector('hbe-prefix')) {
-      Fluid.utils.waitElementLoaded('hbe-prefix', function() {
-        var hbePrefix = document.querySelector('hbe-prefix');
-        hbePrefix.parentElement.classList.add('markdown-body');
-        Fluid.utils.retry(function() {
-          if (Fluid.boot && Fluid.boot.refresh) {
-            Fluid.boot.refresh();
-            return true;
-          }
-        }, 100, 10);
-      })
-    }
-  </script>
 
 
   

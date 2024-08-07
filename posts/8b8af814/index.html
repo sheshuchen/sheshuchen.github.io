@@ -26,13 +26,13 @@
 <meta property="og:site_name" content="佘书晨">
 <meta property="og:description" content="基数统计(Cardinality Counting)指计算一个数据集中不同元素的数量，在很多场景都需要这样的功能：电商场景中的独立用户(UV)数量统计、数据库中快速计算字段取值数量以优化query、计算与某个站点相关的不同链接数量等。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sheshuchen.github.io/estimation.png">
+<meta property="og:image" content="https://sheshuchen.github.io/img/404.png">
 <meta property="article:published_time" content="2024-08-07T02:38:47.000Z">
-<meta property="article:modified_time" content="2024-08-07T03:04:34.320Z">
+<meta property="article:modified_time" content="2024-08-07T03:47:39.612Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="基数估计">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sheshuchen.github.io/estimation.png">
+<meta name="twitter:image" content="https://sheshuchen.github.io/img/404.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -235,7 +235,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/404.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/404.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -269,7 +269,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          1.8k 字
         
       </span>
     
@@ -280,7 +280,7 @@
         
         
         
-          16 分钟
+          15 分钟
         
       </span>
     
@@ -331,52 +331,105 @@
             
               <div class="markdown-body">
                 
-                <h3 id="应用背景"><a href="#应用背景" class="headerlink" title="应用背景"></a>应用背景</h3><p>如检测一个网站的<code>独立访客(UV)</code>的数量，需要统计网站访问者IP地址，并统计不同IP地址的数量。从一个集合中统计出不同元素的数量，这个过程被称为<code>基数统计(Cardinality Counting)</code>。。</p>
-<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>为实现这样的功能，最直观的方法就是使用 <font color = purple>Set </font> 记录每一个元素。但在数量巨大的情况下，会造成大量的内存占用。</p>
+                <h2 id="应用背景">应用背景</h2>
+<p>如检测一个网站的<code>独立访客(UV)</code>的数量，需要统计网站访问者IP地址，并统计不同IP地址的数量。从一个集合中统计出不同元素的数量，这个过程被称为<code>基数统计(Cardinality Counting)</code>。。</p>
+<h2 id="问题描述">问题描述</h2>
+<p>为实现这样的功能，最直观的方法就是使用 <font color = purple>Set </font> 记录每一个元素。但在数量巨大的情况下，会造成大量的内存占用。</p>
 <p>使用<code>位图 (bitmap)</code> 可以将一个很长的序列压缩成一个紧凑的位图，从而减少内存占用。注意这时的内存占用与存储的元素数量无关，而是与元素值的范围有关。也就是说即使只有一个数值，也必会占用一个位图。</p>
 <p>以上两种方式都对基数进行<strong>精确统计</strong>，但是很多时候只需要一个大概的数量，只要误差在一定范围内即可。接下来要讨论的几种算法可以在牺牲一定精确性的情况下，大幅度降低空间占用。即<strong>基数估计(cardinality estimation)</strong></p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="Linear-counting-LC"><a href="#Linear-counting-LC" class="headerlink" title="Linear counting (LC)"></a>Linear counting (LC)</h4><p>Linear counting 是一种基数估计算法，它使用一个固定大小的数组，来统计不同元素的数量。</p>
-<p>记事件 ( A_j ) 为“经过 ( n ) 个数字哈希后，桶 ( j ) 仍为空”，则<br>[ P(A_j) &#x3D; \left(1-\frac{1}{m}\right)^n ]</p>
-<p>记 ( U_n ) 为经过 ( n ) 个数字哈希后，仍为空的桶数量。因各桶独立，则<br>[ E(U_n) &#x3D; m\left(1-\frac{1}{m}\right)^n &#x3D; m\left[\left(1+\frac{1}{-m}\right)^{-m}\right]^{-\frac{n}{m}} ]</p>
-<p>当 ( m \to \infty ) 时，<br>[ \lim_{m \to \infty} E(U_n) &#x3D; \lim_{m \to \infty} m\left[\left(1+\frac{1}{-m}\right)^{-m}\right]^{-\frac{n}{m}} &#x3D; me^{-\frac{n}{m}} ]</p>
-<p>由此得<br>[ n &#x3D; -m \log{\frac{E(U_n)}{m}} ]</p>
-<p>由于每个桶服从相同参数的0-1分布，( U_n ) 符合二项分布。当 ( n ) 很大时，可用正态分布近似，其概率密度函数为<br>[ f(x) &#x3D; \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2{\sigma}^2}} ]</p>
-<p>实际观察到的空桶数 ( u ) 可作为 ( E(U_n) ) 的无偏估计，故 ( \hat{n} &#x3D; m*(-\ln{\frac{u}{m}}) ) 为 ( n ) 的无偏估计。</p>
-<h5 id="误差估计"><a href="#误差估计" class="headerlink" title="误差估计"></a>误差估计</h5><p><strong>偏差</strong><br>记装载因子 ( t &#x3D; \frac{n}{m} )，空桶比例 ( V_n &#x3D; \frac{U_n}{m} )，空桶数量期望 ( p &#x3D; E(V_n) &#x3D; \frac{E(U_n)}{m} &#x3D; e^{-\frac{n}{m}} &#x3D; e^{-t} )</p>
-<p>记 ( -\ln{(V_n)} &#x3D; f(V_n) )，则 ( \hat{n} &#x3D; mf(V_n) )</p>
-<p>在 ( V_n ) 处泰勒展开:<br>[ \hat{n} &#x3D; m\left(f(p)+(V_n-p)f’(p)+\frac{1}{2}(V_n-p)^2f’’(p)+\frac{1}{6}(V_n-p)^3f’’’(p)…\right) ]<br>[ &#x3D; m\left(t-\frac{V_n-p}{p}+\frac{(V_n-p)^2}{2p^2}-\frac{(V_n-p)^3}{3p^3}+\frac{(V_n-p)^4}{4p^4}…\right) ]</p>
-<p>取前三项:<br>[ E(\hat{n}) &#x3D; mt-\frac{mE(V_n-p)}{p} + \frac{E(V_n-p)^2}{2p^2} ]</p>
-<p>因 ( p &#x3D; E(V_n) )，故<br>[ E(\hat{n}) &#x3D; mt+\frac{m}{2p^2}E(V_n-p)^2 ]</p>
-<p>其中<br>[ E(V_n-p)^2 &#x3D; Var(V_n) &#x3D; \left(\frac{1}{m}\right)e^{-t}(1-(1+t)e^{-t}) ]</p>
-<p>最终<br>[ E(\hat{n}) &#x3D; n+\frac{e^t-t-1}{2} ]<br>[ Bias\left(\frac{\hat{n}}{n}\right) &#x3D; E\left(\frac{\hat{n}}{n}\right)-1 &#x3D; \frac{e^t-t-1}{2n} ]</p>
-<p><strong>标准差</strong><br>取泰勒展开的前两项， ( \hat{n} &#x3D; m\left(t-\frac{V_n-p}{p}\right) )</p>
-<p>[ Var\left(\frac{\hat{n}}{n}\right) &#x3D; \frac{1}{n^2}\left(\frac{m^2}{p^2} Var(V_n-p)\right) &#x3D;\frac{1}{n^2}\left(\frac{m^2}{p^2} Var(V_n)\right) &#x3D;\frac{1}{n^2}\left(\frac{m^2}{p^2} \frac{1}{m}\right)p(1-(1+t)p) &#x3D; \frac{m(e^t-t-1)}{n^2} ]</p>
-<p>得<br>[ StdError\left(\frac{\hat{n}}{n}\right) &#x3D; \frac{\sqrt{m(e^t-t-1)}}{n} ]</p>
-<p>其中 ( t &#x3D; \frac{n}{m} ) 。对 ( m ) 求导得到 ( \frac{1}{m}(e^{\frac{n}{m}}(m-n)-1) )，因 ( m &lt; n )，这是关于 ( m ) 的递减函数，故分桶数量越大，标准差越小。</p>
-<h3 id="控制误差"><a href="#控制误差" class="headerlink" title="控制误差"></a>控制误差</h3><p>若需将误差控制在 $\epsilon$ 以下，则有<br>[ \frac{\sqrt{m(e^t-t-1)}}{n} &#x3D; \frac{\sqrt{\frac{e^t-t-1}{t}}}{t} &lt; \epsilon ]</p>
-<p>由此得到 $m$ 的最小数量为<br>[ m &gt; \frac{e^t-t-1}{(\epsilon t)^2} ]</p>
-<h3 id="满桶控制"><a href="#满桶控制" class="headerlink" title="满桶控制"></a>满桶控制</h3><p>当每个桶的值均设为 1，即 $u &#x3D; 0$ 时，$\hat{n} &#x3D; -m \log{\frac{u}{m}}$ 将趋向于无穷大。然而，只要 $m &lt; n$，总存在一定的概率使得 $u &#x3D; 0$。目标是确保这一概率足够小。</p>
-<p>当 $n \to +\infty$，$U_n$ 的二项分布可以近似为正态分布。通过确保 $U_n$ 的期望值与 0 的偏移超过若干倍的标准差来实现控制：<br>[ E(U_n) - a \times StdDev(U_n) &gt; 0 ]</p>
-<p>代入 $E(U_n) &#x3D; me^{-t}$ 和 $StdDev(U_n) &#x3D; \sqrt{me^{-t}(1-(1+t)e^{-t})}$，得到<br>[ m &gt; a^2(e^t-t-1) ]</p>
-<h3 id="结合限制条件"><a href="#结合限制条件" class="headerlink" title="结合限制条件"></a>结合限制条件</h3><p>结合误差控制和满桶控制，最终 $m$ 在期望误差内的最小长度为:<br>[ m &gt; \beta (e^t-t-1), \quad \beta&#x3D;max(a^2, \frac{1}{(\epsilon t)^2}) ]</p>
-<h3 id="确定-a"><a href="#确定-a" class="headerlink" title="确定 $a$"></a>确定 $a$</h3><p>当 $n$ 非常大且落入单个桶的概率 $p &#x3D; \frac{1}{m}$ 极小时，$U_n$ 可以用泊松分布近似。因此，满桶的概率为<br>[ Pr(U_n&#x3D;0) &#x3D; e^{-\lambda} ]</p>
+<h2 id="解决方案">解决方案</h2>
+<h3 id="Linear-counting-LC">Linear counting (LC)</h3>
+<p>Linear counting 是一种基数估计算法，它使用一个固定大小的数组，来统计不同元素的数量。</p>
+<p>记事件 ( A_j ) 为“经过 ( n ) 个数字哈希后，桶 ( j ) 仍为空”，则<br>
+[ P(A_j) = \left(1-\frac{1}{m}\right)^n ]</p>
+<p>记 ( U_n ) 为经过 ( n ) 个数字哈希后，仍为空的桶数量。因各桶独立，则<br>
+[ E(U_n) = m\left(1-\frac{1}{m}\right)^n = m\left[\left(1+\frac{1}{-m}\right)<sup>{-m}\right]</sup>{-\frac{n}{m}} ]</p>
+<p>当 ( m \to \infty ) 时，<br>
+[ \lim_{m \to \infty} E(U_n) = \lim_{m \to \infty} m\left[\left(1+\frac{1}{-m}\right)<sup>{-m}\right]</sup>{-\frac{n}{m}} = me^{-\frac{n}{m}} ]</p>
+<p>由此得<br>
+[ n = -m \log{\frac{E(U_n)}{m}} ]</p>
+<p>由于每个桶服从相同参数的0-1分布，( U_n ) 符合二项分布。当 ( n ) 很大时，可用正态分布近似，其概率密度函数为<br>
+[ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e<sup>{-\frac{(x-\mu)</sup>2}{2{\sigma}^2}} ]</p>
+<p>实际观察到的空桶数 ( u ) 可作为 ( E(U_n) ) 的无偏估计，故 ( \hat{n} = m*(-\ln{\frac{u}{m}}) ) 为 ( n ) 的无偏估计。</p>
+<h4 id="误差估计">误差估计</h4>
+<p><strong>偏差</strong><br>
+记装载因子 ( t = \frac{n}{m} )，空桶比例 ( V_n = \frac{U_n}{m} )，空桶数量期望 ( p = E(V_n) = \frac{E(U_n)}{m} = e^{-\frac{n}{m}} = e^{-t} )</p>
+<p>记 ( -\ln{(V_n)} = f(V_n) )，则 ( \hat{n} = mf(V_n) )</p>
+<p>在 ( V_n ) 处泰勒展开:<br>
+[ \hat{n} = m\left(f(p)+(V_n-p)f’(p)+\frac{1}{2}(V_n-p)<sup>2f’'(p)+\frac{1}{6}(V_n-p)</sup>3f’‘’(p)…\right) ]<br>
+[ = m\left(t-\frac{V_n-p}{p}+\frac{(V_n-p)<sup>2}{2p</sup>2}-\frac{(V_n-p)<sup>3}{3p</sup>3}+\frac{(V_n-p)<sup>4}{4p</sup>4}…\right) ]</p>
+<p>取前三项:<br>
+[ E(\hat{n}) = mt-\frac{mE(V_n-p)}{p} + \frac{E(V_n-p)<sup>2}{2p</sup>2} ]</p>
+<p>因 ( p = E(V_n) )，故<br>
+[ E(\hat{n}) = mt+\frac{m}{2p<sup>2}E(V_n-p)</sup>2 ]</p>
+<p>其中<br>
+[ E(V_n-p)^2 = Var(V_n) = \left(\frac{1}{m}\right)e<sup>{-t}(1-(1+t)e</sup>{-t}) ]</p>
+<p>最终<br>
+[ E(\hat{n}) = n+\frac{e^t-t-1}{2} ]<br>
+[ Bias\left(\frac{\hat{n}}{n}\right) = E\left(\frac{\hat{n}}{n}\right)-1 = \frac{e^t-t-1}{2n} ]</p>
+<h4 id="标准差">标准差</h4>
+<p>取泰勒展开的前两项， ( \hat{n} = m\left(t-\frac{V_n-p}{p}\right) )</p>
+<p>[ Var\left(\frac{\hat{n}}{n}\right) = \frac{1}{n<sup>2}\left(\frac{m</sup>2}{p^2} Var(V_n-p)\right) =\frac{1}{n<sup>2}\left(\frac{m</sup>2}{p^2} Var(V_n)\right) =\frac{1}{n<sup>2}\left(\frac{m</sup>2}{p^2} \frac{1}{m}\right)p(1-(1+t)p) = \frac{m(e<sup>t-t-1)}{n</sup>2} ]</p>
+<p>得<br>
+[ StdError\left(\frac{\hat{n}}{n}\right) = \frac{\sqrt{m(e^t-t-1)}}{n} ]</p>
+<p>其中 ( t = \frac{n}{m} ) 。对 ( m ) 求导得到 ( \frac{1}{m}(e^{\frac{n}{m}}(m-n)-1) )，因 ( m &lt; n )，这是关于 ( m ) 的递减函数，故分桶数量越大，标准差越小。</p>
+<h4 id="控制误差">控制误差</h4>
+<p>若需将误差控制在 $\epsilon$ 以下，则有<br>
+[ \frac{\sqrt{m(e^t-t-1)}}{n} = \frac{\sqrt{\frac{e^t-t-1}{t}}}{t} &lt; \epsilon ]</p>
+<p>由此得到 $m$ 的最小数量为<br>
+[ m &gt; \frac{e^t-t-1}{(\epsilon t)^2} ]</p>
+<h4 id="满桶控制">满桶控制</h4>
+<p>当每个桶的值均设为 1，即 $u = 0$ 时，$\hat{n} = -m \log{\frac{u}{m}}$ 将趋向于无穷大。然而，只要 $m &lt; n$，总存在一定的概率使得 $u = 0$。目标是确保这一概率足够小。</p>
+<p>当 $n \to +\infty$，$U_n$ 的二项分布可以近似为正态分布。通过确保 $U_n$ 的期望值与 0 的偏移超过若干倍的标准差来实现控制：<br>
+[ E(U_n) - a \times StdDev(U_n) &gt; 0 ]</p>
+<p>代入 $E(U_n) = me^{-t}$ 和 $StdDev(U_n) = \sqrt{me<sup>{-t}(1-(1+t)e</sup>{-t})}$，得到<br>
+[ m &gt; a<sup>2(e</sup>t-t-1) ]</p>
+<h4 id="结合限制条件">结合限制条件</h4>
+<p>结合误差控制和满桶控制，最终 $m$ 在期望误差内的最小长度为:<br>
+[ m &gt; \beta (e^t-t-1), \quad \beta=max(a^2, \frac{1}{(\epsilon t)^2}) ]</p>
+<h4 id="确定-a">确定 $a$</h4>
+<p>当 $n$ 非常大且落入单个桶的概率 $p = \frac{1}{m}$ 极小时，$U_n$ 可以用泊松分布近似。因此，满桶的概率为<br>
+[ Pr(U_n=0) = e^{-\lambda} ]</p>
 <p>若要满桶的概率小于 1%，只需 $e^{-\lambda} &lt; 0.01$，从而得到 $\lambda &gt; 5$。因此，只要 $U_n$ 的期望与 0 偏离为 $\sqrt{5}$ 即可确保满桶的概率小于 1%。</p>
-<h3 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h3><p>在 $a &#x3D; \sqrt{5}$ 的情况下，对于不同规模的 $n$，$m$ 的最小长度大约为 $n$ 的十分之一。因此，所需空间仅为传统 bitmap 方法的 $\frac{1}{10}$，但整体空间复杂度仍为 $O(N_{max})$。</p>
-<p>例如，当 $n &#x3D; 2^{30}$ 时，计算得出 $\epsilon &#x3D; 0.01$ 时 $m &#x3D; 75402422$，因此空间占用为 $9$ MB，约为 bitmap 方案的 $\frac{1}{14}$。</p>
-<h3 id="并集与交集"><a href="#并集与交集" class="headerlink" title="并集与交集"></a>并集与交集</h3><p>Linear Counting 支持对多个记录进行合并计算。计算并集时，可以通过简单的 OR 运算得到新的 bitmap，进而计算出估计结果。计算交集时，可通过两集合和并集间接算出。</p>
-<h3 id="LogLog-Counting"><a href="#LogLog-Counting" class="headerlink" title="LogLog Counting"></a>LogLog Counting</h3><h4 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h4><p>LogLog Counting 使用哈希函数 $H$ 应用于所有元素，并对哈希值进行基数估计。$H$ 必须具备良好的均匀性和极低的碰撞概率。</p>
-<h4 id="粗糙估计"><a href="#粗糙估计" class="headerlink" title="粗糙估计"></a>粗糙估计</h4><p>设 $a$ 是经过 $H$ 哈希后的值，长度固定为 $L$。记 $\rho(a)$ 为 $a$ 中第一个 “1” 出现的位置，$\rho_{max}$ 为所有元素哈希后 $\rho(a)$ 的最大值。则总量的估计为<br>[ \hat{n} &#x3D; 2^{\rho_{max}} ]</p>
-<h4 id="分桶平均"><a href="#分桶平均" class="headerlink" title="分桶平均"></a>分桶平均</h4><p>LogLog Counting 使用分桶平均的方式减少误差。根据前 $k$ 位将哈希空间平分为 $m &#x3D; 2^k$ 份，每个桶维护一个 $\rho_{max}$，形成数组 $M$。最终估计时取所有桶的平均值再进行估计。</p>
-<p>[ \hat{n} &#x3D; 2^{\frac{\Sigma{M[i]}}{m}} ]</p>
-<h4 id="误差修正"><a href="#误差修正" class="headerlink" title="误差修正"></a>误差修正</h4><p>通过数学分析，得到渐近无偏估计量<br>[ \hat{n} &#x3D; \alpha_m2^{\frac{1}{m}\Sigma{M[i]}} ]<br>其中<br>[ \alpha_m &#x3D; (\Gamma (-\frac{1}{m})\frac{1-2^{\frac{1}{m}}}{\log 2})^{-m} ]</p>
-<h4 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h4><p>当 $m &gt; 64$ 时，标准误差为<br>[ StdError(\frac{\hat{n}}{n}) \approx \frac{1.3}{\sqrt{m}} ]</p>
-<p>若要将误差控制在 $\epsilon$ 内，则<br>[ m &gt; (\frac{1.30}{\epsilon})^2 ]</p>
-<h3 id="Adaptive-Counting"><a href="#Adaptive-Counting" class="headerlink" title="Adaptive Counting"></a>Adaptive Counting</h3><h4 id="主要改进"><a href="#主要改进" class="headerlink" title="主要改进"></a>主要改进</h4><p>Adaptive Counting 通过寻找一个分段点使 Linear Counting 和 LogLog Counting 的优点互补。分段点处 Linear Counting 的空桶率 $\beta &#x3D; e^{-t} \approx 0.051$。</p>
-<h3 id="HyperLogLog-Counting"><a href="#HyperLogLog-Counting" class="headerlink" title="HyperLogLog Counting"></a>HyperLogLog Counting</h3><h4 id="主要改进-1"><a href="#主要改进-1" class="headerlink" title="主要改进"></a>主要改进</h4><ul>
-<li><strong>调和平均数</strong>：使用调和平均数替代几何平均数以减少离群值的影响。</li>
-<li><strong>分段偏差修正</strong>：给出了在 $n$ 较小或较大时的偏差修正方案。</li>
+<h4 id="空间复杂度">空间复杂度</h4>
+<p>在 $a = \sqrt{5}$ 的情况下，对于不同规模的 $n$，$m$ 的最小长度大约为 $n$ 的十分之一。因此，所需空间仅为传统 bitmap 方法的 $\frac{1}{10}$，但整体空间复杂度仍为 $O(N_{max})$。</p>
+<p>例如，当 $n = 2^{30}$ 时，计算得出 $\epsilon = 0.01$ 时 $m = 75402422$，因此空间占用为 $9$ MB，约为 bitmap 方案的 $\frac{1}{14}$。</p>
+<h4 id="并集与交集">并集与交集</h4>
+<p>Linear Counting 支持对多个记录进行合并计算。计算并集时，可以通过简单的 OR 运算得到新的 bitmap，进而计算出估计结果。计算交集时，可通过两集合和并集间接算出。</p>
+<h3 id="LogLog-Counting">LogLog Counting</h3>
+<h4 id="主要步骤">主要步骤</h4>
+<p>LogLog Counting 使用哈希函数 $H$ 应用于所有元素，并对哈希值进行基数估计。$H$ 必须具备良好的均匀性和极低的碰撞概率。</p>
+<h4 id="粗糙估计">粗糙估计</h4>
+<p>设 $a$ 是经过 $H$ 哈希后的值，长度固定为 $L$。记 $\rho(a)$ 为 $a$ 中第一个 “1” 出现的位置，$\rho_{max}$ 为所有元素哈希后 $\rho(a)$ 的最大值。则总量的估计为<br>
+[ \hat{n} = 2^{\rho_{max}} ]</p>
+<h4 id="分桶平均">分桶平均</h4>
+<p>LogLog Counting 使用分桶平均的方式减少误差。根据前 $k$ 位将哈希空间平分为 $m = 2^k$ 份，每个桶维护一个 $\rho_{max}$，形成数组 $M$。最终估计时取所有桶的平均值再进行估计。</p>
+<p>[ \hat{n} = 2^{\frac{\Sigma{M[i]}}{m}} ]</p>
+<h4 id="误差修正">误差修正</h4>
+<p>通过数学分析，得到渐近无偏估计量<br>
+[ \hat{n} = \alpha_m2^{\frac{1}{m}\Sigma{M[i]}} ]<br>
+其中<br>
+[ \alpha_m = (\Gamma (-\frac{1}{m})\frac{1-2^{\frac{1}{m}}}{\log 2})^{-m} ]</p>
+<h4 id="误差分析">误差分析</h4>
+<p>当 $m &gt; 64$ 时，标准误差为<br>
+[ StdError(\frac{\hat{n}}{n}) \approx \frac{1.3}{\sqrt{m}} ]</p>
+<p>若要将误差控制在 $\epsilon$ 内，则<br>
+[ m &gt; (\frac{1.30}{\epsilon})^2 ]</p>
+<h3 id="Adaptive-Counting">Adaptive Counting</h3>
+<h4 id="主要改进">主要改进</h4>
+<p>Adaptive Counting 通过寻找一个分段点使 Linear Counting 和 LogLog Counting 的优点互补。分段点处 Linear Counting 的空桶率 $\beta = e^{-t} \approx 0.051$。</p>
+<h3 id="HyperLogLog-Counting">HyperLogLog Counting</h3>
+<h4 id="主要改进-2">主要改进</h4>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p><strong>调和平均数</strong>：使用调和平均数替代几何平均数以减少离群值的影响。</p>
+</li>
+<li class="lvl-2">
+<p><strong>分段偏差修正</strong>：给出了在 $n$ 较小或较大时的偏差修正方案。</p>
+</li>
 </ul>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>HyperLogLog Counting 通过改进将误差从 $1.3&#x2F;\sqrt{m}$ 优化到了 $1.04&#x2F;\sqrt{m}$，同时保持了与 LogLog Counting 相同的空间复杂度。</p>
+<h3 id="结论">结论</h3>
+<p>HyperLogLog Counting 通过改进将误差从 $1.3/\sqrt{m}$ 优化到了 $1.04/\sqrt{m}$，同时保持了与 LogLog Counting 相同的空间复杂度。</p>
 
                 
               </div>
